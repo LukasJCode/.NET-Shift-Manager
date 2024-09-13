@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Shift>
+
+<h1>SHIFT MANAGER</h1>
+
+<div class="mt-2 mb-2">
+    <form>
+        <button asp-controller="Shifts" asp-action="Create" class="btn btn-success float-right">Create Shift</button>
+    </form>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Employee Assigned
+            </th>
+            <th>
+                Shift Start
+            </th>
+            <th>
+                Shift End
+            </th>
+            <th>
+                Tasks
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var shift in Model)
+        {
+            <tr>
+                <td>
+                    @shift.Employee.Name
+                </td>
+                <td>
+                    @shift.ShiftStart
+                </td>
+                <td>
+                    @shift.ShiftEnd
+                </td>
+                <td>
+                    @foreach (var job_shift in shift.Jobs_Shifts)
+                    {
+                            @(job_shift.Job.Name + ", ")
+                    }
+                </td>
+                <td>
+                    <form>
+                        <button asp-controller="Shifts" asp-action="Edit" asp-route-id="@shift.Id" class="btn btn-warning">
+                            <i class="bi bi-pencil-square"></i>Edit
+                        </button>
+                        <button asp-controller="Shifts" asp-action="Delete" asp-route-id="@shift.Id" class="btn btn-danger">
+                            <i class="bi bi-trash3-fill"></i>Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
